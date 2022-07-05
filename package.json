@@ -1,0 +1,16 @@
+{
+  "name": "raytracer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^28.1.2",
+    "typescript": "^4.7.4"
+  }
+}
