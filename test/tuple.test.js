@@ -58,3 +58,54 @@ test('subtracting two vectors', () => {
   expect(subtracted.isVector()).toBe(true);
   expect(subtracted.tuple).toEqual([-2, -4, -6, 0]);
 });
+
+test('subtracting a vector from a zero vector', () => {
+  const zero = new Vector(0, 0, 0);
+  const v = new Vector(1, -2, 3);
+  const subtracted = zero.subtract(v);
+
+  expect(subtracted.tuple).toEqual([-1, 2, -3, 0]);
+});
+
+test('negating a tuple', () => {
+  const a = new Tuple(1, -2, 3, -4);
+
+  expect(a.negate().tuple).toEqual([-1, 2, -3, 4]);
+});
+
+test('multiplying a tuple by a scalar', () => {
+  const a = new Tuple(1, -2, 3, -4);
+
+  expect(a.multiply(3.5).tuple).toEqual([3.5, -7, 10.5, -14]);
+});
+
+test('multiplying a tuple by a fraction', () => {
+  const a = new Tuple(1, -2, 3, -4);
+
+  expect(a.multiply(0.5).tuple).toEqual([0.5, -1, 1.5, -2]);
+});
+
+test('computing the magnitude of vector 100', () => {
+  const v = new Vector(1, 0, 0);
+  expect(v.magnitude()).toEqual(1);
+});
+
+test('computing the magnitude of vector 010', () => {
+  const v = new Vector(0, 1, 0);
+  expect(v.magnitude()).toEqual(1);
+});
+
+test('computing the magnitude of vector 001', () => {
+  const v = new Vector(0, 0, 1);
+  expect(v.magnitude()).toEqual(1);
+});
+
+test('computing the magnitude of vector 123', () => {
+  const v = new Vector(1, 2, 3);
+  expect(v.magnitude()).toEqual(Math.sqrt(14));
+});
+
+test('computing the magnitude of vector -1-2-3', () => {
+  const v = new Vector(-1, -2, -3);
+  expect(v.magnitude()).toEqual(Math.sqrt(14));
+});

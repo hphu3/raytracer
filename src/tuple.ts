@@ -36,6 +36,14 @@ class Tuple {
     }
     return new Tuple(...subtracted)
   }
+
+  negate() {
+    return new Tuple(...this.tuple.map((e) => -e));
+  }
+
+  multiply(s) {
+    return new Tuple(...this.tuple.map((e) => e*s));
+  }
 }
 
 class Point extends Tuple {
@@ -47,6 +55,12 @@ class Point extends Tuple {
 class Vector extends Tuple {
   constructor(x, y, z) {
     super(x, y, z, 0);
+  }
+
+  magnitude() {
+    return Math.sqrt(this.tuple.reduce((acc, e) => {
+      return acc + (e ** 2);
+    }, 0));
   }
 }
 
