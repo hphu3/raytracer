@@ -109,3 +109,45 @@ test('computing the magnitude of vector -1-2-3', () => {
   const v = new Vector(-1, -2, -3);
   expect(v.magnitude()).toEqual(Math.sqrt(14));
 });
+
+test('Normalizing vector 400 gisves 100', () => {
+  const v = new Vector(4, 0, 0);
+  expect(v.normalize().tuple).toEqual([1, 0, 0, 0]);
+});
+
+test('normalizing vector 123', () => {
+  const v = new Vector(1, 2, 3);
+  const expected = [0.26726, 0.53452, 0.80178, 0];
+  const actual = v.normalize().tuple;
+  for (let i=0; i<4; i++) {
+    expect(actual[i]).toEqual(expect.closeTo(expected[i], 5));
+  }
+});
+
+test('the magnitude of a normalized vector is 1', () => {
+  const v = new Vector(1, 2, 3);
+  expect(v.normalize().magnitude()).toEqual(1);
+});
+
+test('the dot product of two tuples', () => {
+  const a = new Vector(1, 2, 3);
+  const b = new Vector(2, 3, 4);
+  expect(a.dot(b)).toEqual(20);
+});
+
+test('the magnitude of a normalized vector is 1', () => {
+  const v = new Vector(1, 2, 3);
+  expect(v.normalize().magnitude()).toEqual(1);
+});
+
+test('the magnitude of a normalized vector is 1', () => {
+  const v = new Vector(1, 2, 3);
+  expect(v.normalize().magnitude()).toEqual(1);
+});
+
+test('the cross product of two vectors', () => {
+  const a = new Vector(1, 2, 3);
+  const b = new Vector(2, 3, 4);
+  expect(a.cross(b).tuple).toEqual([-1, 2, -1, 0]);
+  expect(b.cross(a).tuple).toEqual([1, -2, 1, 0]);
+});

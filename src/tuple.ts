@@ -62,6 +62,25 @@ class Vector extends Tuple {
       return acc + (e ** 2);
     }, 0));
   }
+
+  normalize() {
+    const m = this.magnitude();
+    return new Vector(...this.tuple.map((e) => (e / m)));
+  }
+
+  dot(v) {
+   return this.tuple.reduce((acc, e, index) => {
+      return acc + (this.tuple[index] * v.tuple[index]);
+    }, 0);
+  }
+
+  cross(v) {
+    return new Vector(
+      this.tuple[1] * v.tuple[2] - this.tuple[2] * v.tuple[1],
+      this.tuple[2] * v.tuple[0] - this.tuple[0] * v.tuple[2],
+      this.tuple[0] * v.tuple[1] - this.tuple[1] * v.tuple[0]
+    );
+  }
 }
 
 module.exports = { Tuple, Point, Vector } ;
