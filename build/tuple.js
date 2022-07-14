@@ -1,4 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Vector = exports.Point = exports.Tuple = void 0;
 class Tuple {
     constructor(x, y, z, w) {
         this.tuple = [x, y, z, w];
@@ -39,12 +41,14 @@ class Tuple {
         return new Tuple(...this.tuple.map((e) => e * s));
     }
 }
+exports.Tuple = Tuple;
 Tuple.EPSILON = 0.0001;
 class Point extends Tuple {
     constructor(x, y, z) {
         super(x, y, z, 1);
     }
 }
+exports.Point = Point;
 class Vector extends Tuple {
     constructor(x, y, z) {
         super(x, y, z, 0);
@@ -67,4 +71,4 @@ class Vector extends Tuple {
         return new Vector(this.tuple[1] * v.tuple[2] - this.tuple[2] * v.tuple[1], this.tuple[2] * v.tuple[0] - this.tuple[0] * v.tuple[2], this.tuple[0] * v.tuple[1] - this.tuple[1] * v.tuple[0]);
     }
 }
-module.exports = { Tuple, Point, Vector };
+exports.Vector = Vector;

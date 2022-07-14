@@ -1,7 +1,8 @@
 class Tuple {
   static EPSILON = 0.0001;
+  tuple: Array<number>;
 
-  constructor(x, y, z, w) {
+  constructor(x: number, y: number, z: number, w: number) {
     this.tuple = [x, y, z, w];
   }
 
@@ -12,7 +13,7 @@ class Tuple {
   isPoint() { return this.getW() === 1 };
   isVector() { return this.getW() === 0 };
 
-  equals(t2) {
+  equals(t2: Tuple) {
     for (let i=0; i<4; i++) {
       if (Math.abs(this.tuple[i] - t2.tuple[i]) >= Tuple.EPSILON) {
         return false;
@@ -21,39 +22,41 @@ class Tuple {
     return true;
   }
 
-  add(t2) {
+  add(t2: Tuple) {
     const added = [];
     for (let i=0; i<4; i++) {
       added.push(this.tuple[i] + t2.tuple[i]);
     }
-    return new Tuple(...added);
+    return new Tuple(...(added as [number, number, number, number]));
   }
 
-  subtract(t2) {
+  subtract(t2: Tuple) {
     const subtracted = [];
     for (let i=0; i<4; i++) {
       subtracted.push(this.tuple[i] - t2.tuple[i]);
     }
-    return new Tuple(...subtracted)
+    return new Tuple(...(subtracted as [number, number, number, number]));
   }
 
   negate() {
-    return new Tuple(...this.tuple.map((e) => -e));
+    const negated = this.tuple.map((e) => -e) as [number, number, number, number];
+    return new Tuple(...negated);
   }
 
-  multiply(s) {
-    return new Tuple(...this.tuple.map((e) => e*s));
+  multiply(s: number) {
+    const multiplied = this.tuple.map((e) => e*s) as [number, number, number, number];
+    return new Tuple(...multiplied);
   }
 }
 
 class Point extends Tuple {
-  constructor(x, y, z) {
+  constructor(x: number, y: number, z: number) {
     super(x, y, z, 1);
   }
 }
 
 class Vector extends Tuple {
-  constructor(x, y, z) {
+  constructor(x: number, y: number, z: number) {
     super(x, y, z, 0);
   }
 
@@ -65,16 +68,17 @@ class Vector extends Tuple {
 
   normalize() {
     const m = this.magnitude();
-    return new Vector(...this.tuple.map((e) => (e / m)));
+    const normalized = this.tuple.map((e) => (e / m)) as [number, number, number];
+    return new Vector(...normalized);
   }
 
-  dot(v) {
+  dot(v: Vector) {
    return this.tuple.reduce((acc, e, index) => {
       return acc + (this.tuple[index] * v.tuple[index]);
     }, 0);
   }
 
-  cross(v) {
+  cross(v: Vector) {
     return new Vector(
       this.tuple[1] * v.tuple[2] - this.tuple[2] * v.tuple[1],
       this.tuple[2] * v.tuple[0] - this.tuple[0] * v.tuple[2],
@@ -83,4 +87,4 @@ class Vector extends Tuple {
   }
 }
 
-module.exports = { Tuple, Point, Vector } ;
+export { Tuple, Point, Vector };
