@@ -2,8 +2,9 @@ class Tuple {
   static EPSILON = 0.0001;
   tuple: Array<number>;
 
-  constructor(x: number, y: number, z: number, w: number) {
-    this.tuple = [x, y, z, w];
+  constructor(x: number, y: number, z: number, w?: number) {
+    this.tuple = [x, y, z];
+    if (w != null) { this.tuple.push(w) }
   }
 
   get x() {
@@ -19,14 +20,14 @@ class Tuple {
   }
 
   get w() {
-    return this.tuple[3];
+    return this.tuple.length > 3 ? this.tuple[3] : null;
   }
 
   isPoint() { return this.w === 1 };
   isVector() { return this.w === 0 };
 
   equals(t2: Tuple) {
-    for (let i=0; i<4; i++) {
+    for (let i=0; i<this.tuple.length; i++) {
       if (Math.abs(this.tuple[i] - t2.tuple[i]) >= Tuple.EPSILON) {
         return false;
       }
@@ -36,7 +37,7 @@ class Tuple {
 
   add(t2: Tuple) {
     const added = [];
-    for (let i=0; i<4; i++) {
+    for (let i=0; i<this.tuple.length; i++) {
       added.push(this.tuple[i] + t2.tuple[i]);
     }
     return new Tuple(...(added as [number, number, number, number]));
@@ -44,7 +45,7 @@ class Tuple {
 
   subtract(t2: Tuple) {
     const subtracted = [];
-    for (let i=0; i<4; i++) {
+    for (let i=0; i<this.tuple.length; i++) {
       subtracted.push(this.tuple[i] - t2.tuple[i]);
     }
     return new Tuple(...(subtracted as [number, number, number, number]));
@@ -99,4 +100,38 @@ class Vector extends Tuple {
   }
 }
 
-export { Tuple, Point, Vector };
+class Color extends Tuple {
+  constructor(x: number, y: number, z: number) {
+    super(x, y, z);
+  }
+
+  get red() {
+    return this.tuple[0];
+  }
+
+  get green() {
+    return this.tuple[1];
+  }
+
+  get blue() {
+    return this.tuple[2];
+  }
+
+  add(c2: Color) {
+    return new Color(...super.add(c2).tuple as [number, number, number]);
+  }
+
+  subtract(c2: Color) {
+    return new Color(...super.subtract(c2).tuple as [number, number, number]);
+  }
+
+  multiply(s: number) {
+    return new Color(...super.multiply(s).tuple as [number, number, number]);
+  }
+
+  blend(c2: Color) {
+    return new Color(this.red * c2.red, this.green * c2.green, this.blue * c2.blue);
+  }
+}
+
+export { Tuple, Point, Vector, Color };

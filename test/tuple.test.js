@@ -1,4 +1,4 @@
-const { Tuple, Point, Vector } = require('../src/tuple');
+const { Tuple, Point, Vector, Color } = require('../src/tuple');
 
 describe("Tuple", () => {
   test('A tuple with w=1.0 is a point', () => {
@@ -151,5 +151,40 @@ describe("Tuple", () => {
     const b = new Vector(2, 3, 4);
     expect(a.cross(b).tuple).toEqual([-1, 2, -1, 0]);
     expect(b.cross(a).tuple).toEqual([1, -2, 1, 0]);
+  });
+
+  describe("color", () => {
+    test('colors are (red, green, blue) tuples', () => {
+      const c = new Color(-0.5, 0.4, 1.7);
+      expect(c.red).toEqual(-0.5);
+      expect(c.green).toEqual(0.4);
+      expect(c.blue).toEqual(1.7);
+    });
+
+    test('adding colors', () => {
+      const c1 = new Color(0.9, 0.6, 0.75);
+      const c2 = new Color(0.7, 0.1, 0.25);
+      const added = c1.add(c2);
+      expect(added.equals(new Color(1.6, 0.7, 1.0)));
+    });
+
+    test('subtracting colors', () => {
+      const c1 = new Color(0.9, 0.6, 0.75);
+      const c2 = new Color(0.7, 0.1, 0.25);
+      const subtracted = c1.subtract(c2);
+      expect(subtracted.equals(new Color(0.2, 0.5, 0.5)));
+    });
+
+    test('multiplying a color by a scalar', () => {
+      const c = new Color(0.2, 0.3, 0.4);
+      const scaled = c.multiply(2);
+      expect(scaled.equals(new Color(0.4, 0.6, 0.8)));
+    });
+
+    test('multiplying colors', () => {
+      const c1 = new Color(1, 0.2, 0.4);
+      const c2 = new Color(0.9, 1, 0.1);
+      expect(c1.blend(c2).equals(new Color(0.9, 0.2, 0.04)));
+    });
   });
 });
