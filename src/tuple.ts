@@ -6,12 +6,24 @@ class Tuple {
     this.tuple = [x, y, z, w];
   }
 
-  getW() {
+  get x() {
+    return this.tuple[0];
+  }
+
+  get y() {
+    return this.tuple[1];
+  }
+
+  get z() {
+    return this.tuple[2];
+  }
+
+  get w() {
     return this.tuple[3];
   }
 
-  isPoint() { return this.getW() === 1 };
-  isVector() { return this.getW() === 0 };
+  isPoint() { return this.w === 1 };
+  isVector() { return this.w === 0 };
 
   equals(t2: Tuple) {
     for (let i=0; i<4; i++) {
