@@ -20,7 +20,9 @@ class Canvas {
   }
 
   writePixel(x: number, y: number, color: typeof Color) {
-    this.pixels[y][x] = color;
+    if (x <= this.width && y <= this.height) {
+      this.pixels[y][x] = color;
+    }
   }
 
   pixelAt(x: number, y: number) {
