@@ -1,5 +1,5 @@
 class Matrix {
-  matrix: Array<Array<Number>>
+  matrix: Array<Array<number>>
 
   constructor(a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number, j: number, k: number, l: number, m: number, n: number, o: number, p: number) {
     switch (arguments.length) {
@@ -28,6 +28,22 @@ class Matrix {
 
   getValue(row: number, col: number) {
     return this.matrix[row][col];
+  }
+
+  size() {
+    return this.matrix.reduce((sum, curr) => sum + curr.length, 0);
+  }
+
+  equals(other: Matrix) {
+    if (other.size() !== this.size()) { return false }
+    for (let i=0; i< this.matrix.length; i++) {
+      for (let j=0; j< this.matrix[i].length; j++) {
+        if (Math.abs(this.matrix[i][j] - other.matrix[i][j]) >= 1e-4) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }
 
