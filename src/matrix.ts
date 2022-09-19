@@ -1,29 +1,15 @@
+const { Tuple } = require('./tuple');
+
 class Matrix {
   matrix: Array<Array<number>>
 
-  constructor(a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number, j: number, k: number, l: number, m: number, n: number, o: number, p: number) {
-    switch (arguments.length) {
-      case 4:
-        this.matrix = [[a, b],[c, d]];
-        break;
-      case 9:
-        this.matrix = [
-          [a, b, c],
-          [d, e, f],
-          [g, h, i],
-        ];
-        break;
-      case 16:
-        this.matrix = [
-          [a, b, c, d],
-          [e, f, g, h],
-          [i, j, k, l],
-          [m, n, o, p],
-        ];
-        break;
-      default:
-        throw new Error("Unsupported matrix size")
+  constructor(matrix: number[][]) {
+    if (matrix.length != 2 &&
+        matrix.length != 3 &&
+        matrix.length != 4) {
+      throw new Error("Unsupported matrix size")
     }
+    this.matrix = matrix;
   }
 
   getValue(row: number, col: number) {
@@ -36,14 +22,41 @@ class Matrix {
 
   equals(other: Matrix) {
     if (other.size() !== this.size()) { return false }
-    for (let i=0; i< this.matrix.length; i++) {
-      for (let j=0; j< this.matrix[i].length; j++) {
+    for (let i=0; i<this.matrix.length; i++) {
+      for (let j=0; j<this.matrix[i].length; j++) {
         if (Math.abs(this.matrix[i][j] - other.matrix[i][j]) >= 1e-4) {
           return false;
         }
       }
     }
     return true;
+  }
+
+  multiply(other: Matrix | typeof Tuple) {
+    if (other instanceof Matrix) {
+      if (other.size() !== 16 || this.size() !== 16) {
+        throw new Error("Multiply only supports 4x4 matrices")
+      }
+      const result: number[][] = [[], [], [], []];
+
+      for (let i=0; i<4; i++) {
+        for (let j=0; j<4; j++) {
+          const row = this.matrix[i];
+          const otherCol = other.matrix.flatMap((row) => row[j])
+          result[i].push([0,1,2,3].reduce((sum, val) => sum + row[val] * otherCol[val], 0));
+        }
+      }
+      return new Matrix(result);
+    } else if (other instanceof Tuple) {
+      const result: number[] = [];
+
+      for (let i=0; i<4; i++) {
+        const row = this.matrix[i];
+        const otherCol = other.tuple;
+        result.push([0,1,2,3].reduce((sum, val) => sum + row[val] * otherCol[val], 0));
+      }
+      return new Tuple(...result);
+    }
   }
 }
 
