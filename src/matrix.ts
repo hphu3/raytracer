@@ -37,10 +37,7 @@ class Matrix {
   }
 
   transpose() {
-    const transposed: number[][] = [];
-    for (let i=0; i<this.matrix.length; i++) {
-      transposed.push([]);
-    }
+    const transposed: number[][] = new Array(this.matrix.length).fill([]);
     for (let i=0; i<this.matrix.length; i++) {
       const row = this.matrix[i];
       for (let j=0; j<row.length; j++) {
