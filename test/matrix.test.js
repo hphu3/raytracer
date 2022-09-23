@@ -57,4 +57,29 @@ describe("Matrix", () => {
     const b = new Tuple(1, 2, 3, 1);
     expect(a.multiply(b).equals(new Tuple(18, 24, 33, 1)));
   });
+
+  test('multiplying a matrix by the identity matrix', () => {
+    const a = new Matrix([[0, 1, 2, 4], [1, 2, 4, 8], [2, 4, 8, 16], [4, 8, 16, 32]]);
+    expect(a.multiply(Matrix.identity()).equals(a));
+  });
+
+  test('transposing a matrix', () => {
+    const a = new Matrix([[0, 9, 3, 4], [9, 8, 0, 8], [1, 8, 5, 3], [0, 0, 5, 8]]);
+    expect(a.transpose().equals(new Matrix([[0, 9, 1, 0], [9, 8, 8, 0], [3, 0, 5, 5], [0, 8, 3, 8]])));
+  });
+
+  test('calculating the determinant of a 2x2 matrix', () => {
+    const a = new Matrix([[1, 5], [-3, 2]]);
+    expect(a.determinant() == 17);
+  });
+
+  test('a submatrix of a 3x3 matrix is a 2x2 matrix', () => {
+    const a = new Matrix([[1, 5, 0], [-3, 2, 7], [0, 6, -3]]);
+    expect(a.submatrix(0, 2).equals(new Matrix([-3, 2], [0, 6])));
+  });
+
+  test('a submatrix of a 4x4 matrix is a 3x3 matrix', () => {
+    const a = new Matrix([[-6, 1, 1, 6], [-8, 5, 8, 6], [-1, 0, 8, 2], [-7, 1,-1, 1]]);
+    expect(a.submatrix(2, 1).equals(new Matrix([[-6, 1, 6], [-8, 8, 6], [-7, -1, 1]])));
+  });
 });
