@@ -86,7 +86,7 @@ class Matrix {
   }
 
   submatrix(row: number, col: number) {
-    const submatrix = this.matrix.slice();
+    const submatrix = this.matrix.map((arr) => arr.slice());
     submatrix.splice(row, 1);
     for (let i=0; i<submatrix.length; i++) {
       submatrix[i].splice(col, 1);
