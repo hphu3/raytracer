@@ -8,11 +8,6 @@ class Matrix {
   }
 
   constructor(matrix: number[][]) {
-    if (matrix.length != 2 &&
-        matrix.length != 3 &&
-        matrix.length != 4) {
-      throw new Error("Unsupported matrix size")
-    }
     this.matrix = matrix;
   }
 
@@ -74,12 +69,20 @@ class Matrix {
     }
   }
 
-  determinant() {
-    const a = this.matrix[0][0];
-    const b = this.matrix[0][1];
-    const c = this.matrix[1][0];
-    const d = this.matrix[1][1];
-    return a * b - c * d;
+  determinant(): number {
+    if (this.size() === 4) {
+      const a = this.matrix[0][0];
+      const b = this.matrix[0][1];
+      const c = this.matrix[1][0];
+      const d = this.matrix[1][1];
+      return a * b - c * d;
+    } else {
+      // calculate determinant for > 2x2 matrices by
+      // sum of each element in the first (or any) row by its cofactor
+      return this.matrix[0].reduce((acc, val, index) => {
+        return acc + val * this.cofactor(0, index);
+      }, 0);
+    }
   }
 
   submatrix(row: number, col: number) {
@@ -89,6 +92,16 @@ class Matrix {
       submatrix[i].splice(col, 1);
     }
     return new Matrix(submatrix);
+  }
+
+  minor(row: number, col: number): number {
+    const sub = this.submatrix(row, col);
+    return sub.determinant();
+  }
+
+  cofactor(row: number, col: number): number {
+    const minor = this.minor(row, col);
+    return (row + col) % 2 === 0 ? minor : -minor;
   }
 }
 

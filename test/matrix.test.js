@@ -82,4 +82,39 @@ describe("Matrix", () => {
     const a = new Matrix([[-6, 1, 1, 6], [-8, 5, 8, 6], [-1, 0, 8, 2], [-7, 1,-1, 1]]);
     expect(a.submatrix(2, 1).equals(new Matrix([[-6, 1, 6], [-8, 8, 6], [-7, -1, 1]])));
   });
+
+  test('calculating a minor of a 3x3 matrix', () => {
+    const a = new Matrix([[3, 5, 0], [2, -1, -7], [6, -1, 5]]);
+    expect(a.minor(1, 0) == 25);
+  });
+
+  test('calculating the cofactor of a 3x3 matrix', () => {
+    const a = new Matrix([[3, 5, 0], [2, -1, -7], [6, -1, 5]]);
+    expect(a.cofactor(0, 0) == -12);
+    expect(a.minor(1, 0) == 25);
+    expect(a.cofactor(1, 0) == -25);
+  });
+
+  test('calculating the determinant of a 3x3 matrix', () => {
+    const a = new Matrix([[1, 2, 6], [-5, 8, -4], [2, 6, 4]]);
+    expect(a.cofactor(0, 0) == 56);
+    expect(a.cofactor(0, 1) == 12);
+    expect(a.cofactor(0, 2) == -46);
+    expect(a.determinant() == -196);
+  });
+
+  test('calculating the determinant of a 4x4 matrix', () => {
+    const a = new Matrix([
+      [-2, -8, 3, 5],
+      [-3, 1, 7, 3],
+      [1, 2, -9, 6],
+      [-6, 7, 7, -9]
+    ]);
+
+    expect(a.cofactor(0, 0) == 690);
+    expect(a.cofactor(0, 1) == 447);
+    expect(a.cofactor(0, 2) == 210);
+    expect(a.cofactor(0, 3) == 51);
+    expect(a.determinant() == -4071);
+  });
 });
