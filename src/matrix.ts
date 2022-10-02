@@ -103,6 +103,28 @@ class Matrix {
     const minor = this.minor(row, col);
     return (row + col) % 2 === 0 ? minor : -minor;
   }
+
+  invertible() {
+    return this.determinant() !== 0;
+  }
+
+  invert() {
+    if (!this.invertible()) {
+      throw new Error('matrix is not invertible');
+    }
+
+    const inverted: number[][] = [...new Array(this.matrix.length)].map(() => new Array(this.matrix[0].length));
+    const determinant = this.determinant();
+
+    for (let i=0; i<this.matrix.length; i++) {
+      const row = this.matrix[i];
+      for (let j=0; j<row.length; j++) {
+        const cofactor = this.cofactor(i, j);
+        inverted[j][i] = cofactor / determinant;
+      }
+    }
+    return new Matrix(inverted);
+  }
 }
 
 export { Matrix };
