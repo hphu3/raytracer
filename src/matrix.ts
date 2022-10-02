@@ -75,7 +75,7 @@ class Matrix {
       const b = this.matrix[0][1];
       const c = this.matrix[1][0];
       const d = this.matrix[1][1];
-      return a * b - c * d;
+      return a * d - b * c;
     } else {
       // calculate determinant for > 2x2 matrices by
       // sum of each element in the first (or any) row by its cofactor
