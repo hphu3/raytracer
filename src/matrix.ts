@@ -32,11 +32,11 @@ class Matrix {
   }
 
   transpose() {
-    const transposed: number[][] = new Array(this.matrix.length).fill([]);
+    const transposed: number[][] = [...new Array(this.matrix.length)].map(() => new Array(this.matrix[0].length));
     for (let i=0; i<this.matrix.length; i++) {
       const row = this.matrix[i];
       for (let j=0; j<row.length; j++) {
-        transposed[j][i] = row[i];
+        transposed[j][i] = row[j];
       }
     }
     return new Matrix(transposed);
