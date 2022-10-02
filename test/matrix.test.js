@@ -82,7 +82,7 @@ describe("Matrix", () => {
 
   test('a submatrix of a 3x3 matrix is a 2x2 matrix', () => {
     const a = new Matrix([[1, 5, 0], [-3, 2, 7], [0, 6, -3]]);
-    expect(a.submatrix(0, 2).equals(new Matrix([-3, 2], [0, 6]))).toBe(true);
+    expect(a.submatrix(0, 2).equals(new Matrix([[-3, 2], [0, 6]]))).toBe(true);
   });
 
   test('a submatrix of a 4x4 matrix is a 3x3 matrix', () => {
