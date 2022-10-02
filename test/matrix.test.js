@@ -32,13 +32,13 @@ describe("Matrix", () => {
   test('matrix equality with identical matrices', () => {
     const a = new Matrix([[1, 2, 3, 4], [5, 6, 7, 8], [9, 8, 7, 6], [5, 4, 3, 2]]);
     const b = new Matrix([[1, 2, 3, 4], [5, 6, 7, 8], [9, 8, 7, 6], [5, 4, 3, 2]]);
-    expect(a.equals(b));
+    expect(a.equals(b)).toBe(true);
   });
 
   test('matrix equality with different matrices', () => {
     const a = new Matrix([[1, 2, 3, 4], [5, 6, 7, 8], [9, 8, 7, 6], [5, 4, 3, 2]]);
     const b = new Matrix([[2, 3, 4, 5], [6, 7, 8, 9], [8, 7, 6, 5], [4, 3, 2, 1]]);
-    expect(a.equals(b) === false);
+    expect(a.equals(b)).toBe(false);
   });
 
   test('multiplying two matrices', () => {
@@ -49,58 +49,65 @@ describe("Matrix", () => {
       [44, 54, 114, 108],
       [40, 58, 110, 102],
       [16, 26, 46, 42]])
-    ));
+    )).toBe(true);
   });
 
   test('multiplying a matrix and a tuple', () => {
     const a = new Matrix([[1, 2, 3, 4], [2, 4, 4, 2], [8, 6, 4, 1], [0, 0, 0, 1]]);
     const b = new Tuple(1, 2, 3, 1);
-    expect(a.multiply(b).equals(new Tuple(18, 24, 33, 1)));
+    expect(a.multiply(b).equals(new Tuple(18, 24, 33, 1))).toBe(true);
   });
 
   test('multiplying a matrix by the identity matrix', () => {
     const a = new Matrix([[0, 1, 2, 4], [1, 2, 4, 8], [2, 4, 8, 16], [4, 8, 16, 32]]);
-    expect(a.multiply(Matrix.identity()).equals(a));
+    expect(a.multiply(Matrix.identity()).equals(a)).toBe(true);
   });
 
   test('transposing a matrix', () => {
-    const a = new Matrix([[0, 9, 3, 4], [9, 8, 0, 8], [1, 8, 5, 3], [0, 0, 5, 8]]);
-    expect(a.transpose().equals(new Matrix([[0, 9, 1, 0], [9, 8, 8, 0], [3, 0, 5, 5], [0, 8, 3, 8]])));
+    const a = new Matrix([[0, 9, 3, 0], [9, 8, 0, 8], [1, 8, 5, 3], [0, 0, 5, 8]]);
+    expect(a.transpose().equals(
+      new Matrix([
+        [0, 9, 1, 0],
+        [9, 8, 8, 0],
+        [3, 0, 5, 5],
+        [0, 8, 3, 8]
+      ]))
+    ).toBe(true);
   });
 
   test('calculating the determinant of a 2x2 matrix', () => {
     const a = new Matrix([[1, 5], [-3, 2]]);
-    expect(a.determinant() == 17);
+    expect(a.determinant()).toEqual(17);
   });
 
   test('a submatrix of a 3x3 matrix is a 2x2 matrix', () => {
     const a = new Matrix([[1, 5, 0], [-3, 2, 7], [0, 6, -3]]);
-    expect(a.submatrix(0, 2).equals(new Matrix([-3, 2], [0, 6])));
+    expect(a.submatrix(0, 2).equals(new Matrix([-3, 2], [0, 6]))).toBe(true);
   });
 
   test('a submatrix of a 4x4 matrix is a 3x3 matrix', () => {
     const a = new Matrix([[-6, 1, 1, 6], [-8, 5, 8, 6], [-1, 0, 8, 2], [-7, 1,-1, 1]]);
-    expect(a.submatrix(2, 1).equals(new Matrix([[-6, 1, 6], [-8, 8, 6], [-7, -1, 1]])));
+    expect(a.submatrix(2, 1).equals(new Matrix([[-6, 1, 6], [-8, 8, 6], [-7, -1, 1]]))).toBe(true);
   });
 
   test('calculating a minor of a 3x3 matrix', () => {
     const a = new Matrix([[3, 5, 0], [2, -1, -7], [6, -1, 5]]);
-    expect(a.minor(1, 0) == 25);
+    expect(a.minor(1, 0)).toEqual(25);
   });
 
   test('calculating the cofactor of a 3x3 matrix', () => {
     const a = new Matrix([[3, 5, 0], [2, -1, -7], [6, -1, 5]]);
-    expect(a.cofactor(0, 0) == -12);
-    expect(a.minor(1, 0) == 25);
-    expect(a.cofactor(1, 0) == -25);
+    expect(a.cofactor(0, 0)).toEqual(-12);
+    expect(a.minor(1, 0)).toEqual(25);
+    expect(a.cofactor(1, 0)).toEqual(-25);
   });
 
   test('calculating the determinant of a 3x3 matrix', () => {
     const a = new Matrix([[1, 2, 6], [-5, 8, -4], [2, 6, 4]]);
-    expect(a.cofactor(0, 0) == 56);
-    expect(a.cofactor(0, 1) == 12);
-    expect(a.cofactor(0, 2) == -46);
-    expect(a.determinant() == -196);
+    expect(a.cofactor(0, 0)).toEqual(56);
+    expect(a.cofactor(0, 1)).toEqual(12);
+    expect(a.cofactor(0, 2)).toEqual(-46);
+    expect(a.determinant()).toEqual(-196);
   });
 
   test('calculating the determinant of a 4x4 matrix', () => {
@@ -111,10 +118,53 @@ describe("Matrix", () => {
       [-6, 7, 7, -9]
     ]);
 
-    expect(a.cofactor(0, 0) == 690);
-    expect(a.cofactor(0, 1) == 447);
-    expect(a.cofactor(0, 2) == 210);
-    expect(a.cofactor(0, 3) == 51);
-    expect(a.determinant() == -4071);
+    expect(a.cofactor(0, 0)).toEqual(690);
+    expect(a.cofactor(0, 1)).toEqual(447);
+    expect(a.cofactor(0, 2)).toEqual(210);
+    expect(a.cofactor(0, 3)).toEqual(51);
+    expect(a.determinant()).toEqual(-4071);
   });
+
+  test('testing an invertible matrix for invertibility', () => {
+    const a = new Matrix([
+      [6, 4, 4, 4],
+      [5, 5, 7, 6],
+      [4, -9, 3, -7],
+      [9, 1, 7, -6]
+    ]);
+    expect(a.determinant()).toEqual(-2120);
+    expect(a.invertible()).toBe(true);
+  });
+
+  test('testing a noninvertible matrix for invertibility', () => {
+    const a = new Matrix([
+      [-4, 2, -2, -3],
+      [9, 6, 2, 6],
+      [0, -5, 1, -5],
+      [0, 0, 0, 0]
+    ]);
+    expect(a.determinant()).toEqual(0);
+    expect(a.invertible()).toBe(false);
+  });
+
+  // test('calculating the inverse of a matrix', () => {
+  //   const a = new Matrix([
+  //     [-5, 2, 6, -8], [1, -5, 1, 8], [7, 7,-6,-7], [1,-3, 7, 4]
+  //   ]);
+
+  //   const b = a.invert();
+  //   expect(a.determinant() == 532);
+  //   expect(a.cofactor(2, 3) == -160);
+  //   expect(b.matrix[3][2] == -160/532);
+  //   expect(a.cofactor(3, 2) == 105);
+  //   expect(b.matrix[2][3] == 105/532);
+  //   expect(b.equals(
+  //     new Matrix[
+  //       [0.21805, 0.45113, 0.24060, -0.04511],
+  //       [-0.80827, -1.45677, -0.44361, 0.52068],
+  //       [-0.07895, -0.22368, -0.05263, 0.19737],
+  //       [-0.52256, -0.81391, -0.30075, 0.30639]
+  //     ])
+  //   );
+  // });
 });
