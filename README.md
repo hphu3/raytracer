@@ -5,3 +5,6 @@ Compile code:
 
 Run tests:
 `npm t`
+
+Run typescript code:
+`npx ts-node src/projectiles.ts`
