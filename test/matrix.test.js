@@ -261,4 +261,49 @@ describe("Matrix", () => {
     const p = new Point(2, 3, 4);
     expect(transform.multiply(p).equals(new Point(-2, 3, 4))).toBe(true);
   });
+
+  test('rotating a point around the x axis', () => {
+    const p = new Point(0, 1, 0);
+    const halfQuarter = Matrix.rotationX(Math.PI / 4);
+    const fullQuarter = Matrix.rotationX(Math.PI / 2);
+    expect(halfQuarter.multiply(p).equals(
+      new Point(0, Math.sqrt(2) / 2, Math.sqrt(2) / 2)
+    )).toBe(true);
+    expect(fullQuarter.multiply(p).equals(
+      new Point(0, 0, 1)
+    )).toBe(true);
+  });
+
+  test('the inverse of an x-rotation rotates in the opposite direction', () => {
+    const p = new Point(0, 1, 0);
+    const halfQuarter = Matrix.rotationX(Math.PI / 4);
+    const inv = halfQuarter.invert();
+    expect(inv.multiply(p).equals(
+      new Point(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2)
+    )).toBe(true);
+  });
+
+  test('rotating a point around the y axis', () => {
+    const p = new Point(0, 0, 1);
+    const halfQuarter = Matrix.rotationY(Math.PI / 4);
+    const fullQuarter = Matrix.rotationY(Math.PI / 2);
+    expect(halfQuarter.multiply(p).equals(
+      new Point(Math.sqrt(2) / 2, 0, Math.sqrt(2) / 2)
+    )).toBe(true);
+    expect(fullQuarter.multiply(p).equals(
+      new Point(1, 0, 0)
+    )).toBe(true);
+  });
+
+  test('rotating a point around the z axis', () => {
+    const p = new Point(0, 1, 0);
+    const halfQuarter = Matrix.rotationZ(Math.PI / 4);
+    const fullQuarter = Matrix.rotationZ(Math.PI / 2);
+    expect(halfQuarter.multiply(p).equals(
+      new Point(-Math.sqrt(2) / 2, Math.sqrt(2) / 2, 0)
+    )).toBe(true);
+    expect(fullQuarter.multiply(p).equals(
+      new Point(-1, 0, 0)
+    )).toBe(true);
+  });
 });

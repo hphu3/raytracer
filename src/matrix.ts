@@ -25,6 +25,33 @@ class Matrix {
     ]);
   }
 
+  static rotationX(radians: number) {
+    return new Matrix([
+      [1, 0, 0, 0],
+      [0, Math.cos(radians), -Math.sin(radians), 0],
+      [0, Math.sin(radians), Math.cos(radians), 0],
+      [0, 0, 0, 1],
+    ]);
+  }
+
+  static rotationY(radians: number) {
+    return new Matrix([
+      [Math.cos(radians), 0, Math.sin(radians), 0],
+      [0, 1, 0, 0],
+      [-Math.sin(radians), 0, Math.cos(radians), 0],
+      [0, 0, 0, 1],
+    ]);
+  }
+
+  static rotationZ(radians: number) {
+    return new Matrix([
+      [Math.cos(radians), -Math.sin(radians), 0, 0],
+      [Math.sin(radians), Math.cos(radians), 0, 0],
+      [0, 0, 1, 0],
+      [0, 0, 0, 1],
+    ]);
+  }
+
   constructor(matrix: number[][]) {
     this.matrix = matrix;
   }
