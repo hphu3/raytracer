@@ -342,4 +342,26 @@ describe("Matrix", () => {
     const p = new Point(2, 3, 4);
     expect(transform.multiply(p).equals(new Point(2, 3, 7))).toBe(true);
   });
+
+  test('individual transformations are applied in sequence', () => {
+    const p = new Point(1, 0, 1);
+    const A = Matrix.rotationX(Math.PI / 2);
+    const B = Matrix.scaling(5, 5, 5);
+    const C = Matrix.translation(10, 5, 7);
+    const p2 = A.multiply(p);
+    expect(p2.equals(new Point(1, -1, 0))).toBe(true);
+    const p3 = B.multiply(p2);
+    expect(p3.equals(new Point(5, -5, 0))).toBe(true);
+    const p4 = C.multiply(p3);
+    expect(p4.equals(new Point(15, 0, 7))).toBe(true);
+  });
+
+  test('chained transformations must be applied in reverse order', () => {
+    const p = new Point(1, 0, 1);
+    const A = Matrix.rotationX(Math.PI / 2);
+    const B = Matrix.scaling(5, 5, 5);
+    const C = Matrix.translation(10, 5, 7);
+    const T = C.multiply(B).multiply(A);
+    expect(T.multiply(p).equals(new Point(15, 0, 7))).toBe(true);
+  });
 });
