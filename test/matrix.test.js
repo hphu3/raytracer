@@ -1,5 +1,5 @@
 const { Matrix } = require('../src/matrix');
-const { Tuple } = require('../src/tuple');
+const { Tuple, Point, Vector } = require('../src/tuple');
 
 describe("Matrix", () => {
   test('Constructing and inspecting a 4x4 matrix', () => {
@@ -216,5 +216,24 @@ describe("Matrix", () => {
     const c = a.multiply(b);
 
     expect(c.multiply(b.invert()).equals(a)).toBe(true);
+  });
+
+  test('multiplying by a translation matrix', () => {
+    const transform = Matrix.translation(5, -3, 2);
+    const p = new Point(-3, 4, 5);
+    expect(transform.multiply(p).equals(new Point(2, 1, 7))).toBe(true);
+  });
+
+  test('multiplying by the inverse of a translation matrix', () => {
+    const transform = Matrix.translation(5, -3, 2);
+    const inv = transform.invert();
+    const p = new Point(-3, 4, 5);
+    expect(inv.multiply(p).equals(new Point(-8, 7, 3))).toBe(true);
+  });
+
+  test('translation does not affect vectors', () => {
+    const transform = Matrix.translation(5, -3, 2);
+    const v = new Vector(-3, 4, 5);
+    expect(transform.multiply(v).equals(v)).toBe(true);
   });
 });
