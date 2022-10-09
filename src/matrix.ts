@@ -16,6 +16,15 @@ class Matrix {
     ]);
   }
 
+  static scaling(x: number, y: number, z:number) {
+    return new Matrix([
+      [x, 0, 0, 0],
+      [0, y, 0, 0],
+      [0, 0, z, 0],
+      [0, 0, 0, 1],
+    ]);
+  }
+
   constructor(matrix: number[][]) {
     this.matrix = matrix;
   }

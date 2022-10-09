@@ -236,4 +236,29 @@ describe("Matrix", () => {
     const v = new Vector(-3, 4, 5);
     expect(transform.multiply(v).equals(v)).toBe(true);
   });
+
+  test('a scaling matrix applied to a point', () => {
+    const transform = Matrix.scaling(2, 3, 4);
+    const p = new Point(-4, 6, 8);
+    expect(transform.multiply(p).equals(new Point(-8, 18, 32))).toBe(true);
+  });
+
+  test('a scaling matrix applied to a vector', () => {
+    const transform = Matrix.scaling(2, 3, 4);
+    const v = new Vector(-4, 6, 8);
+    expect(transform.multiply(v).equals(new Vector(-8, 18, 32))).toBe(true);
+  });
+
+  test('multiplying by the inverse of a scaling matrix', () => {
+    const transform = Matrix.scaling(2, 3, 4);
+    const inv = transform.invert();
+    const p = new Point(-4, 6, 8);
+    expect(inv.multiply(p).equals(new Point(-2, 2, 2))).toBe(true);
+  });
+
+  test('reflection is scaling by a negative value', () => {
+    const transform = Matrix.scaling(-1, 1, 1);
+    const p = new Point(2, 3, 4);
+    expect(transform.multiply(p).equals(new Point(-2, 3, 4))).toBe(true);
+  });
 });
