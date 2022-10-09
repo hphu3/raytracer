@@ -306,4 +306,40 @@ describe("Matrix", () => {
       new Point(-1, 0, 0)
     )).toBe(true);
   });
+
+  test('a shearing transformation moves x in proportion to y', () => {
+    const transform = Matrix.shearing(1, 0, 0, 0, 0, 0);
+    const p = new Point(2, 3, 4);
+    expect(transform.multiply(p).equals(new Point(5, 3, 4))).toBe(true);
+  });
+
+  test('a shearing transformation moves x in proportion to z', () => {
+    const transform = Matrix.shearing(0, 1, 0, 0, 0, 0);
+    const p = new Point(2, 3, 4);
+    expect(transform.multiply(p).equals(new Point(6, 3, 4))).toBe(true);
+  });
+
+  test('a shearing transformation moves y in proportion to x', () => {
+    const transform = Matrix.shearing(0, 0, 1, 0, 0, 0);
+    const p = new Point(2, 3, 4);
+    expect(transform.multiply(p).equals(new Point(2, 5, 4))).toBe(true);
+  });
+
+  test('a shearing transformation moves y in proportion to z', () => {
+    const transform = Matrix.shearing(0, 0, 0, 1, 0, 0);
+    const p = new Point(2, 3, 4);
+    expect(transform.multiply(p).equals(new Point(2, 7, 4))).toBe(true);
+  });
+
+  test('a shearing transformation moves z in proportion to x', () => {
+    const transform = Matrix.shearing(0, 0, 0, 0, 1, 0);
+    const p = new Point(2, 3, 4);
+    expect(transform.multiply(p).equals(new Point(2, 3, 6))).toBe(true);
+  });
+
+  test('a shearing transformation moves z in proportion to y', () => {
+    const transform = Matrix.shearing(0, 0, 0, 0, 0, 1);
+    const p = new Point(2, 3, 4);
+    expect(transform.multiply(p).equals(new Point(2, 3, 7))).toBe(true);
+  });
 });
