@@ -1,9 +1,10 @@
 const { Tuple, Point, Vector } = require('./tuple');
 const { Sphere } = require('./sphere');
+const { Intersections, Intersection } = require('./intersection');
 
 class Ray {
-  origin: typeof Point
-  direction: typeof Vector
+  origin: typeof Point;
+  direction: typeof Vector;
 
   constructor(origin: typeof Point, direction: typeof Vector) {
     this.origin = origin;
@@ -22,10 +23,11 @@ class Ray {
     const c = sphereToRay.dot(sphereToRay) - 1;
 
     const discriminant = Math.pow(b, 2) - 4 * a * c;
-    if (discriminant < 0) { return [] }
+    if (discriminant < 0) { return new Intersections() }
     const t1 = (-b - Math.sqrt(discriminant)) / (2 * a);
     const t2 = (-b + Math.sqrt(discriminant)) / (2 * a);
-    return [t1, t2];
+
+    return new Intersections(new Intersection(t1, sphere), new Intersection(t2, sphere));
   }
 }
 
