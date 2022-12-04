@@ -87,4 +87,38 @@ describe("ray", () => {
     expect(xs.intersections[0].object).toEqual(s);
     expect(xs.intersections[1].object).toEqual(s);
   });
+
+  test('the hit, when all intersections have positive t', () => {
+    const s = new Sphere();
+    const i1 = new Intersection(1, s);
+    const i2 = new Intersection(2, s);
+    const xs = new Intersections(i2, i1);
+    expect(xs.hit()).toEqual(i1);
+  });
+
+  test('the hit, when some intersections have negative t', () => {
+    const s = new Sphere();
+    const i1 = new Intersection(-1, s);
+    const i2 = new Intersection(1, s);
+    const xs = new Intersections(i2, i1);
+    expect(xs.hit()).toEqual(i2);
+  });
+
+  test('the hit, when all intersections have negative t', () => {
+    const s = new Sphere();
+    const i1 = new Intersection(-2, s);
+    const i2 = new Intersection(-1, s);
+    const xs = new Intersections(i2, i1);
+    expect(xs.hit()).toEqual(null);
+  });
+
+  test('the hit is always the lowest nonnegative intersection', () => {
+    const s = new Sphere();
+    const i1 = new Intersection(5, s);
+    const i2 = new Intersection(7, s);
+    const i3 = new Intersection(-3, s);
+    const i4 = new Intersection(2, s);
+    const xs = new Intersections(i1, i2, i3, i4);
+    expect(xs.hit()).toEqual(i4);
+  });
 });
