@@ -1,5 +1,6 @@
 const { Tuple, Point, Vector } = require('./tuple');
 const { Sphere } = require('./sphere');
+const { Matrix } = require('./matrix');
 const { Intersections, Intersection } = require('./intersection');
 
 class Ray {
@@ -16,18 +17,29 @@ class Ray {
   }
 
   intersects(sphere: typeof Sphere) {
-    const sphereToRayTuple = this.origin.subtract(sphere.center)
+    // use inversely transformed ray in intersection calc to account for sphere transforms
+    const rayToCast = this.transform(sphere.transform.invert());
+    console.log(rayToCast)
+    const sphereToRayTuple = rayToCast.origin.subtract(sphere.center)
     const sphereToRay = new Vector(sphereToRayTuple.x, sphereToRayTuple.y, sphereToRayTuple.z, sphereToRayTuple.w);
-    const a = this.direction.dot(this.direction);
-    const b = this.direction.dot(sphereToRay) * 2;
+    const a = rayToCast.direction.dot(rayToCast.direction);
+    const b = rayToCast.direction.dot(sphereToRay) * 2;
     const c = sphereToRay.dot(sphereToRay) - 1;
 
     const discriminant = Math.pow(b, 2) - 4 * a * c;
+    console.log(discriminant)
     if (discriminant < 0) { return new Intersections() }
     const t1 = (-b - Math.sqrt(discriminant)) / (2 * a);
     const t2 = (-b + Math.sqrt(discriminant)) / (2 * a);
 
+    console.log(t1);
     return new Intersections(new Intersection(t1, sphere), new Intersection(t2, sphere));
+  }
+
+  transform(matrix: typeof Matrix) {
+    const tOrigin = matrix.multiply(this.origin);
+    const tDirection = matrix.multiply(this.direction);
+    return new Ray(tOrigin as typeof Point, tDirection as typeof  Vector);
   }
 }
 

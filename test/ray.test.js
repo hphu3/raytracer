@@ -1,4 +1,5 @@
 const { Ray } = require('../src/ray');
+const { Matrix } = require('../src/matrix');
 const { Point, Vector } = require('../src/tuple');
 const { Sphere } = require('../src/sphere');
 const { Intersection, Intersections } = require('../src/intersection');
@@ -120,5 +121,39 @@ describe("ray", () => {
     const i4 = new Intersection(2, s);
     const xs = new Intersections(i1, i2, i3, i4);
     expect(xs.hit()).toEqual(i4);
+  });
+
+  test('translating a ray', () => {
+    const r = new Ray(new Point(1, 2, 3), new Vector(0, 1, 0));
+    const m = Matrix.translation(3, 4, 5);
+    const r2 = r.transform(m);
+    expect(r2.origin.equals(new Point(4, 6, 8))).toBe(true);
+    expect(r2.direction.equals(new Vector(0, 1, 0))).toBe(true);
+  });
+
+  test('scaling a ray', () => {
+    const r = new Ray(new Point(1, 2, 3), new Vector(0, 1, 0));
+    const m = Matrix.scaling(2, 3, 4);
+    const r2 = r.transform(m);
+    expect(r2.origin.equals(new Point(2, 6, 12))).toBe(true);
+    expect(r2.direction.equals(new Vector(0, 3, 0))).toBe(true);
+  });
+
+  test('intersecting a scaled sphere with a ray', () => {
+    const r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+    const s = new Sphere();
+    s.setTransform(Matrix.scaling(2, 2, 2));
+    const xs = r.intersects(s);
+    expect(xs.intersections.length).toEqual(2);
+    expect(xs.intersections[0].t).toEqual(3);
+    expect(xs.intersections[1].t).toEqual(7);
+  });
+
+  test('intersecting a translated sphere with a ray', () => {
+    const r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+    const s = new Sphere();
+    s.setTransform(Matrix.translation(5, 0, 0));
+    const xs = r.intersects(s);
+    expect(xs.intersections.length).toEqual(0);
   });
 });

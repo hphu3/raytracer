@@ -2,6 +2,14 @@ class Tuple {
   static EPSILON = 0.0001;
   tuple: Array<number>;
 
+  static asPointOrVector(x: number, y: number, z: number, w: number) {
+    if (w === 1) {
+      return new Point(x, y, z);
+    } else if (w === 0) {
+      return new Vector(x, y, z);
+    }
+  }
+
   constructor(x: number, y: number, z: number, w?: number) {
     this.tuple = [x, y, z];
     if (w != null) { this.tuple.push(w) }

@@ -119,7 +119,7 @@ class Matrix {
         const otherCol = other.tuple;
         result.push([0,1,2,3].reduce((sum, val) => sum + row[val] * otherCol[val], 0));
       }
-      return new Tuple(...result);
+      return Tuple.asPointOrVector(...result);
     }
   }
 
