@@ -10,7 +10,9 @@ const canvas = new Canvas(300, 300);
 const color = new Color(1, 0.5, 0.5);
 const sphere = new Sphere();
 sphere.setTransform(
-  Matrix.translation(canvas.width / 2, canvas.height / 2, 0).multiply(Matrix.scaling(100, 100, 1))
+  Matrix.translation(canvas.width / 2, canvas.height / 2, 0)
+    .multiply(Matrix.shearing(1, 0, 0, 0, 0, 0))
+    .multiply(Matrix.scaling(100, 100, 1))
 );
 const cameraOrigin = new Point(canvas.width / 2, canvas.height / 2, -10);
 

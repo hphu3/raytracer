@@ -7,6 +7,8 @@ class Tuple {
       return new Point(x, y, z);
     } else if (w === 0) {
       return new Vector(x, y, z);
+    } else {
+      return new Tuple(x, y, z, w);
     }
   }
 
