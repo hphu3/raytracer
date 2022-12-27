@@ -1,13 +1,16 @@
 const { Matrix } = require('./matrix');
 const { Tuple, Point, Vector } = require('./tuple');
+const { Material } = require('./material');
 
 class Sphere {
   center: typeof Point
   transform: typeof Matrix
+  material: typeof Material
 
   constructor() {
     this.center = new Point(0, 0, 0);
     this.transform = Matrix.identity();
+    this.material = new Material();
   }
 
   setTransform(t: typeof Matrix) {

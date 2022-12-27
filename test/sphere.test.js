@@ -1,6 +1,7 @@
 const { Matrix } = require('../src/matrix');
 const { Sphere } = require('../src/sphere');
 const { Point, Vector } = require('../src/tuple');
+const { Material } = require('../src/material');
 
 describe("sphere", () => {
   test("a sphere's default transformation", () => {
@@ -58,5 +59,19 @@ describe("sphere", () => {
     s.setTransform(m);
     const n = s.normalAt(new Point(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2));
     expect(n.equals(new Vector(0, 0.97014, -0.24254))).toBe(true);
+  });
+
+  test('a sphere has a default material', () => {
+    const s = new Sphere();
+    const m = s.material;
+    expect(m.equals(new Material)).toBe(true);
+  });
+
+  test('a sphere may be assigned a material', () => {
+    const s = new Sphere();
+    const m = new Material();
+    m.ambient = 1;
+    s.material = m;
+    expect(s.material.equals(m)).toBe(true);
   });
 });
