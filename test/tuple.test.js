@@ -187,4 +187,20 @@ describe("Tuple", () => {
       expect(c1.blend(c2).equals(new Color(0.9, 0.2, 0.04)));
     });
   });
+
+  describe('reflection', () => {
+    test('reflecting a vector approaching at 45deg', () => {
+      const v = new Vector(1, -1, 0);
+      const n = new Vector(0, 1, 0);
+      const r = v.reflect(n);
+      expect(r.equals(new Vector(1, 1, 0))).toBe(true);
+    });
+
+    test('reflecting a vector off a slanted surface', () => {
+      const v = new Vector(0, -1, 0);
+      const n = new Vector(Math.sqrt(2) / 2, Math.sqrt(2) / 2, 0);
+      const r = v.reflect(n);
+      expect(r.equals(new Vector(1, 0, 0))).toBe(true);
+    });
+  });
 });

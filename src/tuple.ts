@@ -108,6 +108,10 @@ class Vector extends Tuple {
       this.tuple[0] * v.tuple[1] - this.tuple[1] * v.tuple[0]
     );
   }
+
+  reflect(normal: Vector) {
+    return this.subtract(normal.multiply(2).multiply(this.dot(normal)));
+  }
 }
 
 class Color extends Tuple {
