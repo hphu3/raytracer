@@ -19,7 +19,7 @@ class Material {
 
   lighting(light: typeof PointLight, point: typeof Point, eyev: typeof Vector, normalv: typeof Vector) {
     const effectiveColor = this.color.multiply(light.intensity);
-    const lightv = Tuple.asPointOrVector(...light.position.subtract(point).tuple).normalize();
+    const lightv = light.position.subtract(point).normalize();
     const ambient = effectiveColor.multiply(this.ambient);
 
     let diffuse;
@@ -31,8 +31,8 @@ class Material {
       specular = new Color(0, 0, 0);
     } else {
       diffuse = effectiveColor.multiply(this.diffuse).multiply(lightDotNormal);
-      const reflectv = Tuple.asPointOrVector(...lightv.negate().tuple).reflect(normalv);
-      const reflectDotEye = Tuple.asPointOrVector(...reflectv.tuple).dot(eyev);
+      const reflectv = lightv.negate().reflect(normalv);
+      const reflectDotEye = reflectv.dot(eyev);
 
       if (reflectDotEye <= 0) {
         specular = new Color(0, 0, 0);

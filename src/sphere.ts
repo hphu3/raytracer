@@ -19,7 +19,7 @@ class Sphere {
 
   normalAt(p: typeof Point) {
     const objectPoint = this.transform.invert().multiply(p);
-    const normalInObjectSpace = Tuple.asPointOrVector(...objectPoint.subtract(this.center).tuple);
+    const normalInObjectSpace = objectPoint.subtract(this.center);
     const worldNormal = new Vector(...this.transform.invert().transpose().multiply(normalInObjectSpace).tuple);
     return worldNormal.normalize();
   }

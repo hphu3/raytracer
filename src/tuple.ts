@@ -2,7 +2,7 @@ class Tuple {
   static EPSILON = 0.0001;
   tuple: Array<number>;
 
-  static asPointOrVector(x: number, y: number, z: number, w: number) {
+  static asPointOrVector(x: number, y: number, z: number, w: number): any {
     if (w === 1) {
       return new Point(x, y, z);
     } else if (w === 0) {
@@ -50,7 +50,7 @@ class Tuple {
     for (let i=0; i<this.tuple.length; i++) {
       added.push(this.tuple[i] + t2.tuple[i]);
     }
-    return new Tuple(...(added as [number, number, number, number]));
+    return Tuple.asPointOrVector(...(added as [number, number, number, number]));
   }
 
   subtract(t2: Tuple) {
@@ -58,17 +58,17 @@ class Tuple {
     for (let i=0; i<this.tuple.length; i++) {
       subtracted.push(this.tuple[i] - t2.tuple[i]);
     }
-    return new Tuple(...(subtracted as [number, number, number, number]));
+    return Tuple.asPointOrVector(...(subtracted as [number, number, number, number]));
   }
 
   negate() {
     const negated = this.tuple.map((e) => -e) as [number, number, number, number];
-    return new Tuple(...negated);
+    return Tuple.asPointOrVector(...negated);
   }
 
   multiply(s: number) {
     const multiplied = this.tuple.map((e) => e*s) as [number, number, number, number];
-    return new Tuple(...multiplied);
+    return Tuple.asPointOrVector(...multiplied);
   }
 }
 
