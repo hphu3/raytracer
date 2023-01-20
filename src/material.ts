@@ -18,7 +18,7 @@ class Material {
   }
 
   lighting(light: typeof PointLight, point: typeof Point, eyev: typeof Vector, normalv: typeof Vector) {
-    const effectiveColor = this.color.multiply(light.intensity);
+    const effectiveColor = this.color.blend(light.intensity);
     const lightv = light.position.subtract(point).normalize();
     const ambient = effectiveColor.multiply(this.ambient);
 

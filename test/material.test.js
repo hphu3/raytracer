@@ -30,7 +30,7 @@ describe("material", () => {
   test("lighting with the eye opposite the surface, light offset 45deg", () => {
     const eyev = new Vector(0, 0, -1);
     const normalv = new Vector(0, 0, -1);
-    const light = new PointLight(new Point(0, 0, -10), new Color(1, 1, 1));
+    const light = new PointLight(new Point(0, 10, -10), new Color(1, 1, 1));
     const result = material.lighting(light, position, eyev, normalv);
     expect(result.equals(new Color(0.7364, 0.7364, 0.7364))).toBe(true);
   });
